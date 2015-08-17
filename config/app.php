@@ -196,6 +196,9 @@ return [
 
     ],
     'settings'  =>  [
+            'app'   =>  [
+                'title' =>  'WEB APP TITLE'
+            ],
             'url'   =>  [
                 'register'      =>  'register',
                 'login'         =>  'login',

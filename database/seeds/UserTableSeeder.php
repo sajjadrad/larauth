@@ -43,13 +43,6 @@ class UserTableSeeder extends Seeder
 			        'user' 		=> 1,
 			    ),
 			));
-			$group = Sentry::createGroup(array(
-			    'name'        => 'Premium',
-			    'permissions' => array(
-			    	'premium' 		=> 1,
-			        'user' 		=> 1,
-			    ),
-			));
 		}
 		catch (Cartalyst\Sentry\Groups\NameRequiredException $e)
 		{

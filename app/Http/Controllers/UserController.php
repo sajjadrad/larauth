@@ -23,6 +23,7 @@ class UserController extends Controller
     	else
     		return "Register is disabled.";
     }
+    
     public function doLogin(Request $request)
     {
     	if($request->has('email') and $request->has('password'))

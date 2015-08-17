@@ -7,7 +7,6 @@
     </ul>
 @endsection
 @section('content')
-	
 	@if(isset($messages) and $messages)
 		<div>
 			@foreach($messages as $message)
@@ -27,14 +26,14 @@
 		</fieldset>
 	</div>
 	<div class="large-9 columns">
-		<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users?action=new" method="POST">
+		<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users?action=new" method="POST" autocomplete="off">
 			<fieldset>
 				<legend>New user</legend>
 				<div class="large-2 columns">
 					<input placeholder="Email" name="email" type="text" id="email" />
 				</div>
 				<div class="large-2 columns">
-					<input placeholder="Password" name="password" type="password" id="password" />
+					<input placeholder="Password"  name="password" type="password" id="password" />
 				</div>
 				<div class="large-2 columns">
 					<input placeholder="Firstname" name="firstname" type="text" id="firstname" />
@@ -44,11 +43,11 @@
 				</div>
 				<div class="large-2 columns">
 					<select name="group">
-						<option value="god">God</option>
-						<option value="superadmin">Super Admin</option>
-						<option value="admin">Admin</option>
-						<option value="premium">Premium</option>
-						<option value="user" selected="">User</option>
+						@foreach($groups as $group)
+							@if($group->hasAccess('user'))
+								<option value="{{$group->id}}" @if($group->name == 'User') selected @endif>{{$group->name}}</option>
+							@endif
+						@endforeach
 			        </select>
 				</div>
 				<div class="large-2 columns">
@@ -79,7 +78,7 @@
 							<li><a href="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/{{$user->id}}/edit" class="button tiny success">Edit</a></li>
 							<li>
 								<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/delete" method="POST">
-									<input type="hidden" value="{{$user->id}}">
+									<input type="hidden" name="id" value="{{$user->id}}">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="submit" class="button tiny alert" value="Delete">
 								</form>
 							</li>

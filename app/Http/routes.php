@@ -21,5 +21,8 @@ Route::get(Config::get('app.settings.url.register'),'UserController@showRegister
 Route::get(Config::get('app.settings.url.login'),'UserController@showLogin');
 Route::post(Config::get('app.settings.url.login'),'UserController@doLogin');
 //Route::get(Config::get('app.settings.url.admin_dashboard'),'AdminController@showDashboard');
+Route::get(Config::get('app.settings.url.admin_dashboard').'/users/{id}/edit','AdminController@showUser');
+Route::post(Config::get('app.settings.url.admin_dashboard').'/users/delete','AdminController@deleteUser');
 Route::controller(Config::get('app.settings.url.admin_dashboard'),'AdminController');
+
 
