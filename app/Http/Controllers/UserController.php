@@ -28,6 +28,7 @@ class UserController extends Controller
     {
     	if($request->has('email') and $request->has('password'))
     	{
+            $outputMessage = array();
             try
             {
         		$email = $request->input('email');
@@ -41,35 +42,65 @@ class UserController extends Controller
             }
             catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
             {
-                echo 'Login field is required.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "Login field is required."
+                                        );
             }
             catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e)
             {
-                echo 'Password field is required.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "Password field is required."
+                                        );
             }
             catch (\Cartalyst\Sentry\Users\WrongPasswordException $e)
             {
-                echo 'Wrong password, try again.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "Wrong password, try again."
+                                        );
             }
             catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
             {
-                return 'User was not found.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "User was not found."
+                                        );
             }
             catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
             {
-                echo 'User is not activated.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "User is not activated."
+                                        );
             }
 
             // The following is only required if the throttling is enabled
             catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
             {
-                echo 'User is suspended.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "User is suspended."
+                                        );
             }
             catch (\Cartalyst\Sentry\Throttling\UserBannedException $e)
             {
-                echo 'User is banned.';
+                $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "User is banned."
+                                        );
             }
+            return view('users.login')->with('messages',$outputMessage);
 
     	}
+        else
+        {
+            $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "Login and password field is required."
+                                        );
+            return view('users.login')->with('messages',$outputMessage);
+        }
     }
 }

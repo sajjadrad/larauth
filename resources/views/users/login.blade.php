@@ -2,8 +2,7 @@
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/foundation.min.css">
+        <link rel="stylesheet" href="{{asset('a/admin.css')}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
             .mdl-card__title
@@ -24,7 +23,13 @@
               <div class="small-4 small-centered columns">
                 <fieldset>
                     <legend>Login</legend>
-
+                    @if(isset($messages) and $messages)
+                        <div>
+                            @foreach($messages as $message)
+                                 <div class="label {{$message['type']}}">{{$message['msg']}}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     <label>Email
                         <input type="text" id="email" name="email" placeholder="Email">
                     </label>
