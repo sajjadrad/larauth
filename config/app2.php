@@ -197,7 +197,7 @@ return [
     ],
     'settings'  =>  [
             'app'   =>  [
-                'title' =>  env('APP_TITLE')
+                'title' =>  'WEB APP TITLE'
             ],
             'url'   =>  [
                 'register'      =>  'register',

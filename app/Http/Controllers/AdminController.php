@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Classes\Permission;
+use App\Classes\Setting;
 use Illuminate\Http\Request;
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
 
@@ -27,7 +28,27 @@ class AdminController extends Controller
     }
     public function getSettings()
     {
-        return view('admin.settings');
+        $settings = Setting::getAll();
+        
+        return view('admin.settings')->with('settings',$settings);
+    }
+    public function postSettings(Request $request)
+    {
+        $appTitle = $request->get('app-title');
+        $adminURL = $request->get('admin-url');
+        $registerURL = $request->get('register-url');
+        $loginURL = $request->get('login-url');
+        $appActivate = false;
+        $loginActivate = false;
+        $registerActivate = false;
+        if($request->has('app-activate'))
+            $appActivate = true;
+        if($request->has('login-activate'))
+            $loginActivate = true;
+        if($request->has('register-activate'))
+            $registerActivate = true;
+        Setting::save(array('login_act' =>  $loginActivate,'reg_act'=>  $registerActivate));
+        return redirect()->back();
     }
     public function showUser($id)
     {
