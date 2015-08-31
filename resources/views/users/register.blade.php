@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
+        <title>Register</title>
         <link rel="stylesheet" href="{{asset('a/admin.css')}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Classes\Setting;
 use Illuminate\Http\Request;
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
 
@@ -18,7 +19,8 @@ class UserController extends Controller
     }
     public function showRegister()
     {
-    	if(\Config::get('app.settings.active.register'))
+        $settings = Setting::getAll();
+    	if($settings->registerActivate)
     		return view('users.register');
     	else
     		return "Register is disabled.";

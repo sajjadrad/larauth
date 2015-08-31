@@ -14,7 +14,7 @@
 			@endforeach
 		</div>
 	@endif
-	<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/{$user->id}" method="POST" autocomplete="off">
+	<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/{{$user->id}}" method="POST" autocomplete="off">
 		<fieldset>
 			<legend>Edit {{$user->first_name}}</legend>
 			

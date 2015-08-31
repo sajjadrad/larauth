@@ -36,7 +36,6 @@ class Setting
 	{
 		if(is_array($settings))
 		{
-
 			foreach ($settings as $key => $value)
 			{
 				$tmp = SettingModel::firstOrCreate(array('key'=>$key));
