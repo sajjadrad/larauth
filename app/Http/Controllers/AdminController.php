@@ -63,6 +63,40 @@ class AdminController extends Controller
     	else
     		echo "User not found.";
     }
+    public function editUser(Request $request,$id)
+    {
+        $currentUser = Sentry::getUser();
+        $outputMessage = array();
+        if($currentUser->hasAccess('superadmin'))
+        {
+            $user = User::find($id);
+            if($user and ($currentUser->hasAccess('god') or !$user->hasAccess('god')))
+            {
+                $user->first_name = $request->get('firstname');
+                $user->last_name = $request->get('lastname');
+                $user->save();
+                $outputMessage[] = array(
+                                                "type"  =>  "success",
+                                                "msg"   =>  "User edited successfuly.");
+                return redirect()->back()->with('messages',$outputMessage);
+            }
+            else
+            {
+                $outputMessage[] = array(
+                                                "type"  =>  "alert",
+                                                "msg"   =>  "You have not access to do this action.");
+                return redirect()->back()->with('messages',$outputMessage);
+            }
+        }
+        else
+        {
+            $outputMessage[] = array(
+                                            "type"  =>  "alert",
+                                            "msg"   =>  "You have not access to do this action.");
+            return redirect()->back()->with('messages',$outputMessage);
+        }
+
+    }
     public function deleteUser(Request $request)
     {
     	$outputMessage = array();

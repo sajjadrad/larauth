@@ -14,18 +14,18 @@
 			@endforeach
 		</div>
 	@endif
-	<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/{{$user->id}}" method="POST" autocomplete="off">
+	<form action="{{URL::to(Config::get('app.settings.url.admin_dashboard'))}}/users/{{$user->id}}/edit" method="POST" autocomplete="off">
 		<fieldset>
 			<legend>Edit {{$user->first_name}}</legend>
 			
 				<div class="large-6 columns">
 					<label>Firstname
-						<input type="text" placeholder="Firstname" value="{{$user->first_name}}" />
+						<input type="text" placeholder="Firstname" name="firstname" value="{{$user->first_name}}" />
 					</label>
 				</div>
 				<div class="large-6 columns">
 					<label>Lastname
-						<input type="text" placeholder="Lastname" value="{{$user->last_name}}" />
+						<input type="text" placeholder="Lastname" name="lastname" value="{{$user->last_name}}" />
 					</label>
 				</div>
 				<div class="large-6 columns">
@@ -60,6 +60,7 @@
 					<input id="activate" type="checkbox" @if($user->activated) checked @endif name="activate" @if(!$hasPower) disabled @endif><label for="activate" >Activate</label>
 				</div>
 				<div class="large-12 columns">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="submit" class="button" name="save" value="Save">
 				</div>
 
